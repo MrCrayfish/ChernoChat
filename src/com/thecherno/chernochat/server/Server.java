@@ -180,6 +180,22 @@ public class Server implements Runnable {
 		}
 	}
 
+	private void sendToAllExcept(String message, String ... names) {
+		if (message.startsWith("/m/")) {
+			String text = message.substring(3);
+			text = text.split("/e/")[0];
+			System.out.println(message);
+		}
+		for (int i = 0; i < clients.size(); i++) {
+			ServerClient client = clients.get(i);
+			for(String name : names) {
+				if(!client.name.equals(name)) {
+					send(message.getBytes(), client.address, client.port);
+				}
+			}
+		}
+	}
+
 	private void send(final byte[] data, final InetAddress address, final int port) {
 		send = new Thread("Send") {
 			public void run() {
@@ -210,6 +226,7 @@ public class Server implements Runnable {
 			clients.add(new ServerClient(name, packet.getAddress(), packet.getPort(), id));
 			String ID = "/c/" + id;
 			send(ID, packet.getAddress(), packet.getPort());
+			sendToAllExcept("/m/" + name + " joined the chat!", name);
 		} else if (string.startsWith("/m/")) {
 			sendToAll(string);
 		} else if (string.startsWith("/d/")) {

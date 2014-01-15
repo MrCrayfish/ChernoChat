@@ -14,7 +14,7 @@ public class OnlineUsers extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPane;
-	private JList list;
+	private JList<String> list;
 
 	public OnlineUsers() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -31,7 +31,7 @@ public class OnlineUsers extends JFrame {
 		gbl_contentPane.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 
-		list = new JList();
+		list = new JList<String>();
 		GridBagConstraints gbc_list = new GridBagConstraints();
 		gbc_list.fill = GridBagConstraints.BOTH;
 		gbc_list.gridx = 0;
